@@ -78,7 +78,8 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     {
         this(initial_capacity, 0.5f);
     }
-    // Metodo generador de la tabla para evitar redundancia de codigo en el 
+
+    // Metodo generador de la tabla para evitar redundancia de codigo en el
     // metodo clear()
     private void TableGenerator(){
         
@@ -101,6 +102,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
         this.count = 0;
         this.modCount = 0;
     }
+
     /**
      * Crea una tabla vacía, con la capacidad inicial indicada y con el factor 
      * de carga indicado. Si la capacidad inicial indicada por initial_capacity 
@@ -186,15 +188,13 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
      *         tabla.
      */
     @Override
-    public V get(Object key) 
+    public V get(Object key)
     {
-        // TODO...
-        if(key == null) throw new NullPointerException("get(): parámetro null");
-        for(int i=0; i<table.length; i++)
-        {
-            
-        }
-        return null;
+        // TODO... HECHO
+        int index = this.h((K)key);
+        Map.Entry<K,V> entradaRes = this.search_for_entry((K)key, index);
+        Entry<K,V> entrada = (Entry<K,V>) entradaRes;
+        return (entrada != null) ? entrada.getValue(): null;
     }
 
     /**
@@ -248,9 +248,21 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     @Override
     public V remove(Object key) 
     {
-        // TODO...
+        // TODO... HECHO
         if(key == null) throw new NullPointerException("remove(): parámetro null");
-
+        if(this.containsKey((K) key)) 
+        {
+            int index = this.h((K) key);
+            int pos = this.search_for_index((K)key, index);
+            Map.Entry<K,V> entradaRes = this.search_for_entry((K)key, index);
+            Entry<K,V> entrada = (Entry<K,V>) entradaRes;
+            assert entrada != null;
+            V value = entrada.getValue();
+            table[pos] = new Entry<>(null, null, 2);
+            modCount++;
+            count--;
+            return value;
+        }
         return null;
     }
 
@@ -278,7 +290,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     @Override
     public void clear() 
     {
-        // TODO... obvio...
+        // TODO... obvio... HECHO
         
         this.TableGenerator();
 
@@ -384,8 +396,18 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     @Override
     protected Object clone() throws CloneNotSupportedException 
     {
-        // TODO...
-        TSBHashtableDA<K, V> t = (TSBHashtableDA<K, V>)super.clone();
+        // TODO... HECHO
+        TSBHashtableDA<K, V> t;
+        t = (TSBHashtableDA<K, V>)super.clone();
+        t.table = new Object[table.length];
+        for (int i = 0; i < table.length; i++)
+        {
+            t.table[i] = table[i];
+        }
+        t.keySet = null;
+        t.entrySet = null;
+        t.values = null;
+        t.modCount = 0;
 
         return t;
     }
@@ -434,8 +456,10 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     @Override
     public int hashCode() 
     {
-        // TODO...
+        // TODO... HECHO
         int hc = super.hashCode();
+        int hash = 7;
+        hc = 61 * hash + hc;
         return hc;
     }
     
