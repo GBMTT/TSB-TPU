@@ -1030,7 +1030,17 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                 if(TSBHashtableDA.this.isEmpty()){return false;}
                 if(current == size() + 1) { return false; }
                 Entry<K,V> entrada = (Entry<K,V>) table[current];
-                if (entrada.getState() == 1)
+                if (entrada.getState() == 0 || entrada.getState() == 2)
+                {
+                    current = current + 1;
+                    entrada = (Entry<K,V>) table[current];
+                    while(current == size() && (entrada.getState() == 0 || entrada.getState() == 2))
+                    {
+                        current++;
+                        entrada = (Entry<K,V>) table[current];
+                    }
+                }
+                else
                 {
                     nextCurrent = current + 1;
                     entrada = (Entry<K,V>) table[nextCurrent];
@@ -1039,10 +1049,10 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                         nextCurrent++;
                         entrada = (Entry<K,V>) table[nextCurrent];
                     }
-                    if (nextCurrent == size() + 2){
-                        return false;
-                    }
-
+                }
+                if (nextCurrent == size() + 2)
+                {
+                    return false;
                 }
                 return true;
             }
@@ -1051,29 +1061,29 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
              * Retorna el siguiente elemento disponible en la tabla.
              */
             @Override
-            public Map.Entry<K, V> next()
-            {
+            public Map.Entry<K, V> next() {
                 //TODO... HECHO
 
                 // control: fail-fast iterator...
-                if(TSBHashtableDA.this.modCount != expected_modCount)
-                {
+                if (TSBHashtableDA.this.modCount != expected_modCount) {
                     throw new ConcurrentModificationException("next(): modificación inesperada de tabla...");
                 }
 
-                if(!hasNext())
-                {
+                if (!hasNext()) {
                     throw new NoSuchElementException("next(): no existe el elemento pedido...");
                 }
+
                 old = current;
-                Entry<K,V> salida = (Entry<K,V>) table[current];
+                Entry<K, V> salida = (Entry<K, V>) table[current];
                 current = nextCurrent;
+
                 // avisar que next() fue invocado con éxito...
                 next_ok = true;
-
                 // y retornar el elemento alcanzado...
                 return salida;
             }
+
+
             
             /*
              * Remueve el elemento actual de la tabla, dejando el iterador en la
