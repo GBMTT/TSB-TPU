@@ -3,6 +3,7 @@ package clases;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Hashtable;
 
 /**
  * Una clase con un main() simple para probar la clase TSBHashtableDA.
@@ -32,13 +33,9 @@ public class Test
         //ht1.put(12, "Estados Unidos");
         System.out.println("Luego de algunas inserciones: " + ht1);
 
-        System.out.println(ht1.contains("Argentina"));
-        System.out.println(ht1.contains("España"));
-        System.out.println(ht1.contains("Brasil"));
-        /*
         TSBHashtableDA<Integer, String> ht2 = new TSBHashtableDA<>(ht1);
         System.out.println("Segunda tabla: " + ht2);
-        
+
         System.out.println("Tabla 1 recorrida a partir de una vista: ");
         Set<Map.Entry<Integer, String>> se = ht1.entrySet();
         Iterator<Map.Entry<Integer, String>> it = se.iterator();
@@ -46,6 +43,6 @@ public class Test
         {
             Map.Entry<Integer, String> entry = it.next();
             System.out.println("Par: " + entry);
-        }*/
+        }
     }
 }

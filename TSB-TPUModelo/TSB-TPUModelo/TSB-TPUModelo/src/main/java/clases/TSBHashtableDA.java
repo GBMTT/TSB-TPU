@@ -373,11 +373,13 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     @Override
     public Set<Map.Entry<K, V>> entrySet() 
     {
-        if(entrySet == null) 
-        { 
-            // entrySet = Collections.synchronizedSet(new EntrySet()); 
+        if(entrySet == null)
+        {
+            //entrySet = Collections.synchronizedSet(new EntrySet());
             entrySet = new EntrySet();
+
         }
+
         return entrySet;
     }
 
@@ -837,7 +839,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                 // TODO... HECHO
                 next_ok = false;
                 expected_modCount = TSBHashtableDA.this.modCount;
-                current = 0;
+                current = 1;
                 nextCurrent = 0;
                 old = 0;
             }
@@ -849,23 +851,23 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             @Override
             public boolean hasNext() 
             {
-                // TODO...HECHO
+                // TODO... HECHO
                 if(TSBHashtableDA.this.isEmpty()){return false;}
-                if(current >= size() - 1) { return false; }
+                if(current == size() + 1) { return false; }
                 Entry<K,V> entrada = (Entry<K,V>) table[current];
                 if (entrada.getState() == 1)
                 {
                     nextCurrent = current + 1;
                     entrada = (Entry<K,V>) table[nextCurrent];
-                    while(nextCurrent < size() && (entrada.getState() == 0 || entrada.getState() == 2))
+                    while(nextCurrent == size() && (entrada.getState() == 0 || entrada.getState() == 2))
                     {
                         nextCurrent++;
                         entrada = (Entry<K,V>) table[nextCurrent];
                     }
-                    if (nextCurrent == size() - 1)
-                    {
+                    if (nextCurrent == size() + 2){
                         return false;
                     }
+
                 }
                 return true;
             }
@@ -890,8 +892,8 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                     throw new NoSuchElementException("next(): no existe el elemento pedido...");
                 }
                 old = current;
-                current = nextCurrent;
                 Entry<K,V> salida = (Entry<K,V>) table[current];
+                current = nextCurrent;
                 // avisar que next() fue invocado con éxito...
                 next_ok = true;
 
@@ -1010,7 +1012,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             {
                 // TODO... HECHO
                 old = 0;
-                current = 0;
+                current = 1;
                 nextCurrent = 0;
                 next_ok = false;
                 expected_modCount = TSBHashtableDA.this.modCount;
@@ -1020,26 +1022,27 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
              * Determina si hay al menos un elemento en la tabla que no haya 
              * sido retornado por next(). 
              */
+
             @Override
-            public boolean hasNext() 
+            public boolean hasNext()
             {
                 // TODO... HECHO
                 if(TSBHashtableDA.this.isEmpty()){return false;}
-                if(current >= size() - 1) { return false; }
+                if(current == size() + 1) { return false; }
                 Entry<K,V> entrada = (Entry<K,V>) table[current];
                 if (entrada.getState() == 1)
                 {
                     nextCurrent = current + 1;
                     entrada = (Entry<K,V>) table[nextCurrent];
-                    while(nextCurrent < size() && (entrada.getState() == 0 || entrada.getState() == 2))
+                    while(nextCurrent == size() && (entrada.getState() == 0 || entrada.getState() == 2))
                     {
                         nextCurrent++;
                         entrada = (Entry<K,V>) table[nextCurrent];
                     }
-                    if (nextCurrent == size() - 1)
-                    {
+                    if (nextCurrent == size() + 2){
                         return false;
                     }
+
                 }
                 return true;
             }
@@ -1048,27 +1051,26 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
              * Retorna el siguiente elemento disponible en la tabla.
              */
             @Override
-            public Map.Entry<K, V> next() 
+            public Map.Entry<K, V> next()
             {
                 //TODO... HECHO
 
                 // control: fail-fast iterator...
                 if(TSBHashtableDA.this.modCount != expected_modCount)
-                {    
+                {
                     throw new ConcurrentModificationException("next(): modificación inesperada de tabla...");
                 }
-                
-                if(!hasNext()) 
+
+                if(!hasNext())
                 {
                     throw new NoSuchElementException("next(): no existe el elemento pedido...");
                 }
                 old = current;
-                current = nextCurrent;
                 Entry<K,V> salida = (Entry<K,V>) table[current];
-
+                current = nextCurrent;
                 // avisar que next() fue invocado con éxito...
                 next_ok = true;
-                
+
                 // y retornar el elemento alcanzado...
                 return salida;
             }
@@ -1167,7 +1169,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             {
                 // TODO...HECHO
                 nextCurrent = 0;
-                current = 0;
+                current = 1;
                 old = 0;
                 next_ok = false;
                 expected_modCount = TSBHashtableDA.this.modCount;
@@ -1182,23 +1184,22 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             {
                 // TODO... HECHO
                 if(TSBHashtableDA.this.isEmpty()){return false;}
-                if(current >= size() - 1) { return false; }
+                if(current == size() + 1) { return false; }
                 Entry<K,V> entrada = (Entry<K,V>) table[current];
                 if (entrada.getState() == 1)
                 {
                     nextCurrent = current + 1;
                     entrada = (Entry<K,V>) table[nextCurrent];
-                    while(nextCurrent < size() && (entrada.getState() == 0 || entrada.getState() == 2))
+                    while(nextCurrent == size() && (entrada.getState() == 0 || entrada.getState() == 2))
                     {
                         nextCurrent++;
                         entrada = (Entry<K,V>) table[nextCurrent];
                     }
-                    if (nextCurrent == size() - 1)
-                    {
+                    if (nextCurrent == size() + 2){
                         return false;
                     }
-                }
 
+                }
                 return true;
             }
 
@@ -1221,8 +1222,8 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                     throw new NoSuchElementException("next(): no existe el elemento pedido...");
                 }
                 old = current;
-                current = nextCurrent;
                 Entry<K,V> salida = (Entry<K,V>) table[current];
+                current = nextCurrent;
 
                 // avisar que next() fue invocado con éxito...
                 next_ok = true;
