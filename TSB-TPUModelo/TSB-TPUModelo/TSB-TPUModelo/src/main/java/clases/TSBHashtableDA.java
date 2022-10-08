@@ -258,8 +258,8 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             Entry<K,V> entrada = (Entry<K,V>) entradaRes;
             assert entrada != null;
             V value = entrada.getValue();
-            table[pos] = new Entry<>(null, null, 2);
-            modCount++;
+            table[pos] = new Entry<>(null, null, TOMBSTONE);
+           modCount++;
             count--;
             return value;
         }
@@ -498,10 +498,10 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     {
         // TODO... HECHO
         if(value == null) return false;
-        for(int i = 0; i < this.table.length; i++) {
-            Entry<K, V> entry = (Entry<K, V>) table[i];
+        for (Object o : this.table) {
+            Entry<K, V> entry = (Entry<K, V>) o;
             if (entry.getState() == CLOSED) {
-                if (entry.getValue().equals(value)){
+                if (entry.getValue().equals(value)) {
                     return true;
                 }
             }
@@ -915,7 +915,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                 { 
                     throw new IllegalStateException("remove(): debe invocar a next() antes de remove()...");
                 }
-                table[current] = new Entry<>(null, null, 2);
+                table[current] = new Entry<>(null, null, TOMBSTONE);
                 current = old;
                 
                 // avisar que el remove() válido para next() ya se activó...

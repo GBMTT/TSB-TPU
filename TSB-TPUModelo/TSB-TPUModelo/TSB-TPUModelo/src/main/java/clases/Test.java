@@ -25,13 +25,17 @@ public class Test
         ht1.put(5, "Uruguay");
         ht1.put(6, "Perú");
         ht1.put(7, "Colombia");
-        //ht1.put(8, "Ecuador");
+        ht1.put(8, "Ecuador");
         //ht1.put(9, "Paraguay");
         //ht1.put(10, "Bolivia");
         //ht1.put(11, "Venezuela");
         //ht1.put(12, "Estados Unidos");
         System.out.println("Luego de algunas inserciones: " + ht1);
-        
+
+        System.out.println(ht1.contains("Argentina"));
+        System.out.println(ht1.contains("España"));
+        System.out.println(ht1.contains("Brasil"));
+        /*
         TSBHashtableDA<Integer, String> ht2 = new TSBHashtableDA<>(ht1);
         System.out.println("Segunda tabla: " + ht2);
         
@@ -42,6 +46,6 @@ public class Test
         {
             Map.Entry<Integer, String> entry = it.next();
             System.out.println("Par: " + entry);
-        }
+        }*/
     }
 }
