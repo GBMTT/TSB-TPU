@@ -21,7 +21,7 @@ public class Test
         // algunas inserciones...
         ht1.put(1, "Argentina");
         ht1.put(2, "Brasil");
-        ht1.put(3, "Chile");
+        //ht1.put(3, "Chile");
         //ht1.put(4, "Mexico");
         //ht1.put(5, "Uruguay");
         ht1.put(6, "Perú");
@@ -40,6 +40,7 @@ public class Test
         System.out.println("Tabla 1 recorrida a partir de una vista: ");
         Set<Map.Entry<Integer, String>> se = ht1.entrySet();
         Iterator<Map.Entry<Integer, String>> it = se.iterator();
+
         while(it.hasNext())
         {
             Map.Entry<Integer, String> entry = it.next();
