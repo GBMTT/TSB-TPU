@@ -19,17 +19,17 @@ public class Test
         System.out.println("Contenido inicial: " + ht1);
         
         // algunas inserciones...
-        ht1.put(1, "Argentina");
+        //ht1.put(1, "Argentina");
         ht1.put(2, "Brasil");
         //ht1.put(3, "Chile");
-        //ht1.put(4, "Mexico");
+        ht1.put(4, "Mexico");
         //ht1.put(5, "Uruguay");
-        ht1.put(6, "Perú");
-        ht1.put(7, "Colombia");
-        ht1.put(8, "Ecuador");
-        ht1.put(9, "Paraguay");
+        //ht1.put(6, "Perú");
+        //ht1.put(7, "Colombia");
+        //ht1.put(8, "Ecuador");
+        //ht1.put(9, "Paraguay");
         ht1.put(10, "Bolivia");
-        ht1.put(11, "Venezuela");
+        //ht1.put(11, "Venezuela");
         ht1.put(12, "Estados Unidos");
 
         System.out.println("Luego de algunas inserciones: " + ht1);
