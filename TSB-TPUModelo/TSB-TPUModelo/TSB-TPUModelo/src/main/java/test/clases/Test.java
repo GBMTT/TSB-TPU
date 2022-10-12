@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class Test 
 {
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         // una tabla "corta" con factor de carga pequeño...
         TSBHashtableDA<Integer, String> ht1 = new TSBHashtableDA<>(3, 0.2f);
