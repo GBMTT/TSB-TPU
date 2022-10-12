@@ -1,4 +1,6 @@
-package clases;
+package test.clases;
+
+import clases.TSBHashtableDA;
 
 import java.util.Iterator;
 import java.util.Map;
