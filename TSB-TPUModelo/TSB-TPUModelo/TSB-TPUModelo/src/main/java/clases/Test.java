@@ -39,12 +39,10 @@ public class Test
 
         System.out.println("Tabla 1 recorrida a partir de una vista: ");
         Set<Map.Entry<Integer, String>> se = ht1.entrySet();
-        Iterator<Map.Entry<Integer, String>> it = se.iterator();
 
-        while(it.hasNext())
-        {
-            Map.Entry<Integer, String> entry = it.next();
+        for (Map.Entry<Integer, String> entry : se) {
             System.out.println("Par: " + entry);
         }
+
     }
 }

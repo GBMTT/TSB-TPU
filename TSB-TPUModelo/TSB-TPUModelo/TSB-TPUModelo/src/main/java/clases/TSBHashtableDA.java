@@ -162,7 +162,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     @Override
     public boolean containsKey(Object key) 
     {
-        return (this.get((K)key) != null);
+        return (this.get(key) != null);
     }
 
     /**
@@ -217,7 +217,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
        int ik = this.h(key);
 
        V old = null;
-       Map.Entry<K, V> x = this.search_for_entry((K)key, ik);
+       Map.Entry<K, V> x = this.search_for_entry(key, ik);
        if(x != null) 
        {
            old = x.getValue();
@@ -250,7 +250,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     {
         // TODO... HECHO
         if(key == null) throw new NullPointerException("remove(): parámetro null");
-        if(this.containsKey((K) key)) 
+        if(this.containsKey(key))
         {
             int index = this.h((K) key);
             int pos = this.search_for_index((K)key, index);
@@ -402,10 +402,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
         TSBHashtableDA<K, V> t;
         t = (TSBHashtableDA<K, V>)super.clone();
         t.table = new Object[table.length];
-        for (int i = 0; i < table.length; i++)
-        {
-            t.table[i] = table[i];
-        }
+        System.arraycopy(table, 0, t.table, 0, table.length);
         t.keySet = null;
         t.entrySet = null;
         t.values = null;
@@ -461,9 +458,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
         // TODO...
         int hc = 0;
         Set<Map.Entry<K, V>> t = this.entrySet();
-        Iterator<Map.Entry<K, V>> s = t.iterator();
-        while(s.hasNext()){
-            Map.Entry<K, V> e = s.next();
+        for (Map.Entry<K, V> e : t) {
             hc += e.hashCode();
         }
 
@@ -481,12 +476,10 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
     {
         // TODO REVISAR... Asegúrense de que funciona bien...
         StringBuilder cad = new StringBuilder("[");
-        for(int i = 0; i < this.table.length; i++)
-        {
-            Entry<K, V> entry = (Entry<K, V>) table[i];
-            if(entry.getState() == CLOSED)
-            {
-                cad.append(entry.toString());
+        for (Object o : this.table) {
+            Entry<K, V> entry = (Entry<K, V>) o;
+            if (entry.getState() == CLOSED) {
+                cad.append(entry);
                 cad.append(" ");
             }
         }
@@ -765,7 +758,7 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             
             final Entry other = (Entry) obj;
             if (!Objects.equals(this.key, other.key)) { return false; }
-            if (!Objects.equals(this.value, other.value)) { return false; }            
+            if (!Objects.equals(this.value, other.value)) { return false; }
             return true;
         }       
         
@@ -863,7 +856,10 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             {
                 // TODO... HECHO BIEN
                 if(TSBHashtableDA.this.isEmpty()){return false;}
-                if(v == (size()*2)) { return false; }
+                if(v == (size()*2)) {
+                    v = 0;
+                    return false;
+                }
                 Entry<K,V> entrada;
                 nextCurrent = current + 1;
                 nextCurrent %= table.length;
@@ -874,7 +870,6 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                         v++;
                         return true;
                     }
-                    if (nextCurrent > table.length) {return false;}
                     nextCurrent = i;
                     nextCurrent %= table.length;
                     entrada = (Entry<K,V>) table[nextCurrent];
@@ -1044,7 +1039,10 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             {
                 // TODO... HECHO BIEN
                 if(TSBHashtableDA.this.isEmpty()){return false;}
-                if(v == (size()*2)) { return false; }
+                if(v == (size()*2)) {
+                    v = 0;
+                    return false;
+                }
                 Entry<K,V> entrada;
                 nextCurrent = current + 1;
                 nextCurrent %= table.length;
@@ -1055,7 +1053,6 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                         v++;
                         return true;
                     }
-                    if (nextCurrent > table.length) {return false;}
                     nextCurrent = i;
                     nextCurrent %= table.length;
                     entrada = (Entry<K,V>) table[nextCurrent];
@@ -1208,7 +1205,10 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
             {
                 // TODO... HECHO BIEN
                 if(TSBHashtableDA.this.isEmpty()){return false;}
-                if(v == (size()*2)) { return false; }
+                if(v == (size()*2)) {
+                    v = 0;
+                    return false;
+                }
                 Entry<K,V> entrada;
                 nextCurrent = current + 1;
                 nextCurrent %= table.length;
@@ -1219,7 +1219,6 @@ public class TSBHashtableDA<K,V> implements Map<K,V>, Cloneable, Serializable
                         v++;
                         return true;
                     }
-                    if (nextCurrent > table.length) {return false;}
                     nextCurrent = i;
                     nextCurrent %= table.length;
                     entrada = (Entry<K,V>) table[nextCurrent];
