@@ -54,6 +54,7 @@ public class Menu implements Initializable {
         this.generos = Controlador.getListaGeneros();
         cargarComboBox(this.cbxGeneros, generos);
         cargarComboBox(this.cbxResultado, resultados);
+        this.dgvDetalle.setVisible(false);
     }
 
     public void cargarComboBox(ComboBox combo, Set<String> generos){
@@ -62,6 +63,7 @@ public class Menu implements Initializable {
 
     @FXML
     private void buscar(ActionEvent event) {
+        this.dgvDetalle.setVisible(true);
         this.dgvDetalle.getItems().clear();
         this.dgvDetalle.getColumns().clear();
 
@@ -75,6 +77,7 @@ public class Menu implements Initializable {
     private void cargarResultados(Object resultadoBusqueda) {
         switch (cbxResultado.getValue()) {
             case "Cantidad de Series":
+                this.dgvDetalle.setVisible(false);
                 String resultado = "El genero " + cbxGeneros.getValue() + " cuenta con " + resultadoBusqueda.toString() + " series";
                 Alert dialogo = new Alert(Alert.AlertType.CONFIRMATION);
                 dialogo.setTitle("Cantidad de Series");
