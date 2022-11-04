@@ -2,13 +2,14 @@ package tsb_tpup2.tsb_tpup2.Clases.Controller;
 
 import tsb_tpup2.tsb_tpup2.Clases.Model.Resultados;
 import tsb_tpup2.tsb_tpup2.Clases.Model.Serie;
+import tsb_tpup2.tsb_tpup2.Clases.TSBHashtableDA;
 
 import java.io.File;
 import java.util.*;
 
 public class Controlador {
 
-    private static HashMap<String, Resultados> ht = new HashMap<>();
+    private static TSBHashtableDA<String, Resultados> ht = new TSBHashtableDA<>();
     private static HashSet<String> listaGeneros = new HashSet<>();
 
     public Controlador() {}
@@ -81,11 +82,11 @@ public class Controlador {
     }
 
 
-    public static HashMap<String, Resultados> getHt() {
+    public static TSBHashtableDA<String, Resultados> getHt() {
         return ht;
     }
 
-    public static void setHt(HashMap<String, Resultados> ht) {
+    public static void setHt(TSBHashtableDA<String, Resultados> ht) {
         Controlador.ht = ht;
     }
 
