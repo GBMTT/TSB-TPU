@@ -41,13 +41,12 @@ public class Controlador {
                 serie.setStar4((String)valores[10]);
                 serie.setNroVotos(Integer.parseInt((String)valores[11]));
 
-                Resultados res = new Resultados();
-
                 for (String genero: serie.getGeneros()) {
                     if (!ht.containsKey(genero)) {
+                        Resultados res = new Resultados();
                         ht.put(genero, res);
                     }
-                    res.obtenerResultados(ht,serie,genero);
+                    ht.get(genero).obtenerResultados(ht,serie,genero);
                     listaGeneros.add(genero);
                 }
             }
