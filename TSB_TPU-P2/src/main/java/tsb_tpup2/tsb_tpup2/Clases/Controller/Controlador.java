@@ -7,6 +7,7 @@ import tsb_tpup2.tsb_tpup2.Clases.TSBHashtableDA;
 import java.io.File;
 import java.util.*;
 
+// clase encargada de la logica de ejecucion de los distintos conteos y resultados que deben obtenerse
 public class Controlador {
 
     private static TSBHashtableDA<String, Resultados> ht = new TSBHashtableDA<>();
@@ -14,6 +15,7 @@ public class Controlador {
 
     public Controlador() {}
 
+    // resuelve la lectura del archivo y la obtencion de los resultados para cada genero de serie disponible
     public static void recorrerArchivo(){
         try {
             Scanner file = new Scanner(new File("D:\\Users\\Asus\\Documents\\GitHub\\TSB_TPU-P2\\src\\main\\resources\\tsb_tpup2\\tsb_tpup2\\series_data_clean.csv"));
@@ -42,6 +44,7 @@ public class Controlador {
                 serie.setStar4((String)valores[10]);
                 serie.setNroVotos(Integer.parseInt((String)valores[11]));
 
+                // se recorren todos los generos de cada serie y se obtienen los resultados
                 for (String genero: serie.getGeneros()) {
                     if (!ht.containsKey(genero)) {
                         Resultados res = new Resultados();
@@ -57,6 +60,7 @@ public class Controlador {
         }
     }
 
+    // resuelve la entrega de los resultados de acuerdo con el genero y conteo solicitados
     public Object mostrarResultado(String genero, String resSolicitado) {
         switch (resSolicitado) {
             case "Cantidad de Series":

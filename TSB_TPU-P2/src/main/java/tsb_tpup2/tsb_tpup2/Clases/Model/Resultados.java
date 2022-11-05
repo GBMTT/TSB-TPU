@@ -3,17 +3,21 @@ package tsb_tpup2.tsb_tpup2.Clases.Model;
 import tsb_tpup2.tsb_tpup2.Clases.TSBHashtableDA;
 import tsb_tpup2.tsb_tpup2.Clases.Util.Truncador;
 import java.util.ArrayList;
+
+// clase encargada del calculo de los resultados
 public class Resultados {
     private int cantSeriesPorGenero;
     private ArrayList<Serie> seriesDeGenero;
     private Integer[] cantSeriesPorPuntuacion;
 
+    // inicializacion de los resultados
     public Resultados() {
         cantSeriesPorGenero = 0;
         cantSeriesPorPuntuacion = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         seriesDeGenero = new ArrayList<>();
     }
 
+    // busca el genero indicado en la Tabla de Hash y calcula los resultados para el mismo
     public void obtenerResultados(TSBHashtableDA<String,Resultados> ht, Serie serie, String genero) {
         ht.get(genero).cantSeriesPorGenero++;
         Serie serieParaDetalles = new Serie(serie.getTitulo(), serie.getRating());

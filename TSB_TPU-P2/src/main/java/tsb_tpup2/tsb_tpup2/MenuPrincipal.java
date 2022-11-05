@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+// clase encargada de la ejecucion de la aplicacion grafica
 public class MenuPrincipal extends Application {
     @Override
     public void start(Stage stage) throws IOException {

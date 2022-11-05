@@ -1,15 +1,10 @@
 package tsb_tpup2.tsb_tpup2.Clases.View;
 
-import javafx.beans.binding.ListExpression;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import tsb_tpup2.tsb_tpup2.Clases.Controller.Controlador;
 import tsb_tpup2.tsb_tpup2.Clases.Model.Serie;
 import tsb_tpup2.tsb_tpup2.Clases.Util.ColumnData;
@@ -18,6 +13,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
+// clase encargada de la escena visual
 public class Menu implements Initializable {
     @FXML
     private Button btnBuscar;
@@ -46,7 +42,7 @@ public class Menu implements Initializable {
     private Set<String> resultados = Set.of("Cantidad por Puntuacion", "Detalles de Series", "Cantidad de Series");
     private List<ColumnData> cabeceras;
 
-
+    // metodo encargado de definir funciones a la hora de inciar la escena
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.controlador = new Controlador();
@@ -57,10 +53,12 @@ public class Menu implements Initializable {
         this.dgvDetalle.setVisible(false);
     }
 
-    public void cargarComboBox(ComboBox combo, Set<String> generos){
-        combo.getItems().addAll(generos);
+    // metodo encargado de cargar los combos a partir de un Set de datos
+    public void cargarComboBox(ComboBox combo, Set<String> datos){
+        combo.getItems().addAll(datos);
     }
 
+    // metodo que ejecuta la busqueda de los resultado de acuerdo al genero y resultado especificado
     @FXML
     private void buscar(ActionEvent event) {
         this.dgvDetalle.setVisible(true);
@@ -74,6 +72,7 @@ public class Menu implements Initializable {
         cargarResultados(resultado);
     }
 
+    // metodo encargado de la carga de los resultados en el formato necesario para cada uno
     private void cargarResultados(Object resultadoBusqueda) {
         switch (cbxResultado.getValue()) {
             case "Cantidad de Series":
@@ -97,6 +96,7 @@ public class Menu implements Initializable {
         }
     }
 
+    // metodo encargado de la creacion de las columnas de la TableView de acuerdo al resultado solicitado
     private void crearColumnas() {
         this.cabeceras = new ArrayList<>();
         switch (cbxResultado.getValue()) {
@@ -117,15 +117,17 @@ public class Menu implements Initializable {
         }
     }
 
+    // metodo encargado de cargar la TableView con los datos del resultado
     private void cargarColumnas() {
         List<TableColumn<String, ?>> columnas = this.cabeceras.stream()
-                .map((x) -> this.CrearColumna(x))
+                .map((x) -> this.crearColumna(x))
                 .collect(Collectors.toList());
         this.dgvDetalle.getColumns().addAll((columnas));
         this.dgvDetalle.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
-    private TableColumn<String, ?> CrearColumna(ColumnData columnData) {
+    // metodo encargado de la creacion de una TableColumn
+    private TableColumn<String, ?> crearColumna(ColumnData columnData) {
         TableColumn<String, ?> column = new TableColumn<>(columnData.getCabecera());
         column.setCellValueFactory(new PropertyValueFactory<>(columnData.getProperty()));
         column.setPrefWidth(columnData.getSize());

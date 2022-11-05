@@ -1,12 +1,12 @@
 package tsb_tpup2.tsb_tpup2.Clases.Model;
 
+// clase que gestiona y almacena las series
 public class Serie
 {
     private String titulo;
     private String runTimeSerie;
     private String calificacion;
     private String runTimeEpisodio;
-
     private String[] generos;
     private double rating;
     private String argumento;
@@ -51,7 +51,6 @@ public class Serie
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
 
     public String getRunTimeSerie() {
         return runTimeSerie;
